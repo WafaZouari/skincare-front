@@ -109,7 +109,7 @@ export default function Home() {
       <Head>
         <title>Skincare Advisor | Personalized Recommendations</title>
         <meta name="description" content="Get expert skincare advice tailored to your concerns" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="./favicon.ico" />
       </Head>
 
       <main className="px-4 py-8 md:py-12 w-full h-full">
