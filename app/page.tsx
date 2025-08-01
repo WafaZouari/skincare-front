@@ -57,12 +57,12 @@ export default function Home() {
   const [response, setResponse] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [products, setProducts] = useState<any[]>([]);
-  const [hasProducts, setHasProducts] = useState<boolean>(false);
+  //const [hasProducts, setHasProducts] = useState<boolean>(false);
   const [textResponse, setTextResponse] = useState<string>("");
   useEffect(() => {
     const parsedProducts = parseProductsFromResponse(response);
     setProducts(parsedProducts);
-    setHasProducts(parsedProducts.length > 0);
+    //setHasProducts(parsedProducts.length > 0);
 
     const cleanedText = parsedProducts.length > 0
       ? response.split('\n').filter(line => !line.startsWith('|')).join('\n')
@@ -76,7 +76,10 @@ export default function Home() {
     setResponse("");
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/ask", {
+      // Replace with your actual API endpoint
+      //https://skincare-api-iknz.onrender.com/ask if deployed
+      //"http://127.0.0.1:8000/ask" if running locally
+      const res = await fetch("https://skincare-api-iknz.onrender.com/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ skin_concern: skinConcern, question }),
