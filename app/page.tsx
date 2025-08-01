@@ -3,9 +3,14 @@
 import { useState, FormEvent, useEffect } from "react";
 import Head from "next/head";
 import "./globals.css";
-
+type Product = {
+  name: string;
+  targetConcerns: string;
+  price: string;
+  link: string;
+};
 // Helper function to parse products from markdown table
-const ProductCard = ({ product }: { product: any }) => {
+const ProductCard = ({ product }: { product: Product }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
       <div className="p-4">
@@ -56,7 +61,7 @@ export default function Home() {
   const [question, setQuestion] = useState<string>("");
   const [response, setResponse] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState<any[]>([]);
+  const [products, setProducts] = useState<Product[]>([]);
   //const [hasProducts, setHasProducts] = useState<boolean>(false);
   const [textResponse, setTextResponse] = useState<string>("");
   useEffect(() => {
@@ -131,9 +136,15 @@ export default function Home() {
                 {/* Skin Concern Input */}
                 <div className="space-y-3">
                   <label htmlFor="skinConcern" className="block text-sm font-medium text-gray-700 m-2">
-                    What's your primary skin concern?
+                    What&apos;s your primary skin concern?
                     <span className="text-pink-500 ml-1">*</span>
                   </label>
+
+                  <label htmlFor="skinConcern" className="block text-sm font-medium text-gray-700 m-2">
+                    What&apos;s your primary skin concern?
+                    <span className="text-pink-500 ml-1">*</span>
+                  </label>
+
                   <div className="relative">
                     <input
                       id="skinConcern"
