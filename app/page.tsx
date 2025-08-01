@@ -140,11 +140,6 @@ export default function Home() {
                     <span className="text-pink-500 ml-1">*</span>
                   </label>
 
-                  <label htmlFor="skinConcern" className="block text-sm font-medium text-gray-700 m-2">
-                    What&apos;s your primary skin concern?
-                    <span className="text-pink-500 ml-1">*</span>
-                  </label>
-
                   <div className="relative">
                     <input
                       id="skinConcern"
