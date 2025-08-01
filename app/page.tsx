@@ -136,8 +136,7 @@ export default function Home() {
                 {/* Skin Concern Input */}
                 <div className="space-y-3">
                   <label htmlFor="skinConcern" className="block text-sm font-medium text-gray-700 m-2">
-                    What&apos;s your primary skin concern?
-                    <span className="text-pink-500 ml-1">*</span>
+                    what is your primary skin concern?
                   </label>
 
                   <div className="relative">
@@ -160,7 +159,6 @@ export default function Home() {
                 <div className="space-y-3">
                   <label htmlFor="question" className="block text-sm font-medium text-gray-700">
                     Your specific question
-                    <span className="text-pink-500 ml-1">*</span>
                   </label>
                   <textarea
                     id="question"
