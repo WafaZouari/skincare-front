@@ -2,7 +2,7 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import Head from "next/head";
-import "./globals.css";
+import "../globals.css";
 type Product = {
   name: string;
   targetConcerns: string;
