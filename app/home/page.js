@@ -1,16 +1,10 @@
 "use client";
 
-import { useState, FormEvent, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Head from "next/head";
 import "../globals.css";
-type Product = {
-  name: string;
-  targetConcerns: string;
-  price: string;
-  link: string;
-};
-// Helper function to parse products from markdown table
-const ProductCard = ({ product }: { product: Product }) => {
+
+const ProductCard = ({ product }) => {
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-100 hover:shadow-lg transition-shadow">
       <div className="p-4">
@@ -31,59 +25,59 @@ const ProductCard = ({ product }: { product: Product }) => {
     </div>
   );
 };
-const parseProductsFromResponse = (response: string) => {
+
+const parseProductsFromResponse = (response) => {
   if (!response) return [];
 
-  // Find the markdown table in the response
   const tableRegex = /\|.*?\n\|.*?\n(\|.*?\n)*/g;
   const tableMatch = response.match(tableRegex);
 
   if (!tableMatch) return [];
 
   const table = tableMatch[0];
-  const rows = table.split('\n').filter(row => row.startsWith('|'));
-
-  // Skip header and separator rows
+  const rows = table.split("\n").filter((row) => row.startsWith("|"));
   const productRows = rows.slice(2);
 
-  return productRows.map(row => {
-    const columns = row.split('|').map(col => col.trim()).filter(Boolean);
+  return productRows.map((row) => {
+    const columns = row.split("|").map((col) => col.trim()).filter(Boolean);
     return {
       name: columns[0],
       targetConcerns: columns[1],
       price: columns[2],
-      link: columns[3]
+      link: columns[3],
     };
   });
 };
+
 export default function Home() {
-  const [skinConcern, setSkinConcern] = useState<string>("");
-  const [question, setQuestion] = useState<string>("");
-  const [response, setResponse] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [products, setProducts] = useState<Product[]>([]);
-  //const [hasProducts, setHasProducts] = useState<boolean>(false);
-  const [textResponse, setTextResponse] = useState<string>("");
+  const [skinConcern, setSkinConcern] = useState("");
+  const [question, setQuestion] = useState("");
+  const [response, setResponse] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [products, setProducts] = useState([]);
+  const [textResponse, setTextResponse] = useState("");
+
   useEffect(() => {
     const parsedProducts = parseProductsFromResponse(response);
     setProducts(parsedProducts);
-    //setHasProducts(parsedProducts.length > 0);
 
-    const cleanedText = parsedProducts.length > 0
-      ? response.split('\n').filter(line => !line.startsWith('|')).join('\n')
-      : response;
+    const cleanedText =
+      parsedProducts.length > 0
+        ? response
+          .split("\n")
+          .filter((line) => !line.startsWith("|"))
+          .join("\n")
+        : response;
 
     setTextResponse(cleanedText);
   }, [response]);
-  async function handleSubmit(e: FormEvent) {
+
+  async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
     setResponse("");
 
     try {
-      // Replace with your actual API endpoint
-      //https://skincare-api-iknz.onrender.com/ask if deployed
-      //"http://127.0.0.1:8000/ask" if running locally
       const res = await fetch("https://skincare-api-iknz.onrender.com/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -108,12 +102,14 @@ export default function Home() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-pink-50">
       <Head>
         <title>Skincare Advisor | Personalized Recommendations</title>
-        <meta name="description" content="Get expert skincare advice tailored to your concerns" />
+        <meta
+          name="description"
+          content="Get expert skincare advice tailored to your concerns"
+        />
         <link rel="icon" href="./favicon.ico" />
       </Head>
 
       <main className="px-4 py-8 md:py-12 w-full h-full">
-        {/* Hero Section */}
         <section className="text-center mb-10 animate-fade-in">
           <div className="inline-block bg-gradient-to-r from-blue-100 to-pink-100 rounded-full p-2 mb-4">
             <div className="bg-white rounded-full p-3">
@@ -128,17 +124,14 @@ export default function Home() {
           </p>
         </section>
 
-        {/* Consultation Form */}
         <section className="mb-10 animate-fade-in-up">
           <div className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
             <div className="p-6 md:p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Skin Concern Input */}
                 <div className="space-y-3">
                   <label htmlFor="skinConcern" className="block text-sm font-medium text-gray-700 m-2">
-                    what is your primary skin concern?
+                    What is your primary skin concern?
                   </label>
-
                   <div className="relative">
                     <input
                       id="skinConcern"
@@ -155,7 +148,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Question Input */}
                 <div className="space-y-3">
                   <label htmlFor="question" className="block text-sm font-medium text-gray-700">
                     Your specific question
@@ -171,7 +163,6 @@ export default function Home() {
                   />
                 </div>
 
-                {/* Submit Button */}
                 <button
                   type="submit"
                   disabled={loading}
@@ -186,14 +177,7 @@ export default function Home() {
                         fill="none"
                         viewBox="0 0 24 24"
                       >
-                        <circle
-                          className="opacity-25"
-                          cx="12"
-                          cy="12"
-                          r="10"
-                          stroke="currentColor"
-                          strokeWidth="4"
-                        ></circle>
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                         <path
                           className="opacity-75"
                           fill="currentColor"
@@ -211,18 +195,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Results Section */}
         {response && (
           <section className="animate-fade-in-up">
             <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 border border-gray-100">
               <div className="bg-gradient-to-r from-blue-500 to-pink-500 p-4">
                 <h2 className="text-xl font-bold text-white flex items-center">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-5 w-5 mr-2"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
-                  >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
                     <path
                       fillRule="evenodd"
                       d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z"
@@ -233,44 +211,32 @@ export default function Home() {
                 </h2>
               </div>
               <div className="p-6">
-                {/*  <div className="prose max-w-none text-gray-700">
-                  {response.split('\n').map((paragraph, i) => (
-                    <p key={i} className="mb-4 last:mb-0">{paragraph}</p>
+                <h3 className="font-bold text-lg text-gray-800 mb-4">Recommended Products</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                  {products.map((product, index) => (
+                    <ProductCard key={index} product={product} />
                   ))}
-                </div> */}
-                <div className="p-6">
+                </div>
 
-                  <h3 className="font-bold text-lg text-gray-800 mb-4">Recommended Products</h3>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-                    {products?.map((product, index) => (
-                      <ProductCard key={index} product={product} />
-                    ))}
-                  </div>
-
-
-                  <div className="prose max-w-none text-gray-700">
-                    {textResponse.split('\n').map((paragraph, i) => (
-                      <p key={i} className="mb-4 last:mb-0">{paragraph}</p>
-                    ))}
-                  </div>
-
-                  <div className="mt-6 border-t border-gray-100 pt-4">
-                    <p className="text-sm text-gray-500 flex items-center">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      Remember to patch test new products and consult a dermatologist for serious concerns.
+                <div className="prose max-w-none text-gray-700">
+                  {textResponse.split("\n").map((paragraph, i) => (
+                    <p key={i} className="mb-4 last:mb-0">
+                      {paragraph}
                     </p>
-                  </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 border-t border-gray-100 pt-4">
+                  <p className="text-sm text-gray-500 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                      <path
+                        fillRule="evenodd"
+                        d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                    Remember to patch test new products and consult a dermatologist for serious concerns.
+                  </p>
                 </div>
               </div>
             </div>

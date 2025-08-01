@@ -1,16 +1,16 @@
-import type { Metadata } from "next";
 import "./globals.css";
-export const metadata: Metadata = {
+
+export const metadata = {
   title: {
     default: "GlowGuide | AI Skincare Advisor",
     template: "%s | GlowGuide"
   },
   description: "Get personalized skincare recommendations powered by AI",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://your-app-name.onrender.com"),
   openGraph: {
     title: "GlowGuide | AI Skincare Advisor",
     description: "Get personalized skincare recommendations powered by AI",
-    url: "/",
+    url: process.env.NEXT_PUBLIC_SITE_URL || "https://your-app-name.onrender.com",
     siteName: "GlowGuide",
     images: [
       {
@@ -43,13 +43,9 @@ export const metadata: Metadata = {
   manifest: "/manifest.webmanifest",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
         <meta name="theme-color" content="#ffffff" />
@@ -58,7 +54,6 @@ export default function RootLayout({
         <div className="flex-1">
           {children}
         </div>
-
         <footer className="py-6 mt-auto bg-white/80 backdrop-blur-sm border-t border-gray-200">
           <div className="container mx-auto px-4 max-w-7xl">
             <p className="text-sm text-gray-600 text-center">
