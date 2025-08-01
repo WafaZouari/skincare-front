@@ -1,11 +1,9 @@
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "standalone", // Required for Render.com
+  output: 'standalone',
   experimental: {
     appDir: true,
   },
 };
 
 module.exports = nextConfig;
-
