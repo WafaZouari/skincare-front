@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Head from "next/head";
-import "../globals.css";
+import "./globals.css";
 
 const ProductCard = ({ product }) => {
   return (
