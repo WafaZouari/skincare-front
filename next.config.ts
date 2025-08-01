@@ -1,8 +1,11 @@
-import type { NextConfig } from "next";
 
-const nextConfig: NextConfig = {
-  output: "export",
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  output: "standalone", // Required for Render.com
+  experimental: {
+    appDir: true,
+  },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
 
