@@ -78,7 +78,7 @@ export default function Home() {
     setResponse("");
 
     try {
-      const res = await fetch("https://skincare-api-os62.onrender.com/ask", {
+      const res = await fetch("https://skincare-api-1.onrender.com//ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ skin_concern: skinConcern, question }),
